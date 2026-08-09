@@ -1,0 +1,43 @@
+PHASE 4: USER STORIES (RETENTION ENGINE & BUSINESS INTELLIGENCE)
+====================================================================
+
+MODULE 12: PREDICTIVE MAINTENANCE & AUTOMATED SERVICE REMINDERS
+---------------------------------------------------------------
+
+User Story 12.1: Predictive Maintenance & Outbound WhatsApp Reminders
+- As an: Admin (Garage Owner)
+- I want: Automated background background tasks to calculate overdue services and dispatch WhatsApp reminders
+- So that: Past customers are automatically re-engaged and brought back into the shop on schedule.
+
+Acceptance Criteria:
+* System runs daily cron evaluations using service intervals (e.g., 6 months or 5,000 km) from previous visit data.
+* Automated personalized WhatsApp reminders are dispatched with quick-reply buttons (e.g., [Book Service Now]).
+* Reminders automatically exclude customers who already have an upcoming scheduled appointment.
+
+
+MODULE 13: REVENUE & FINANCIAL REPORTS
+--------------------------------------
+
+User Story 13.1: Financial Performance & Sales Breakdown Reporting
+- As an: Admin (Garage Owner)
+- I want: Visual financial dashboards displaying gross revenue, profit margins, receivables, and sales breakdowns
+- So that: I can evaluate business profitability and financial health across chosen date ranges.
+
+Acceptance Criteria:
+* Dashboard provides configurable date filters (Today, This Week, This Month, Custom Range).
+* Reports display total gross revenue, net profit margin, total tax collected, and outstanding receivables.
+* Visual breakdown separates revenue generated from Parts Sales, Labor Fees, and Subcontracted Services.
+
+
+MODULE 14: OPERATIONAL & RETENTION ANALYTICS
+--------------------------------------------
+
+User Story 14.1: Technician Productivity & Retention Analytics
+- As an: Admin (Garage Owner)
+- I want: To track technician job efficiency and customer return rates driven by WhatsApp campaigns
+- So that: I can measure operational effectiveness and marketing return on investment.
+
+Acceptance Criteria:
+* Analytics report tracks total billable hours generated, job completion speed, and rework rate per mechanic.
+* Retention tracking measures customer re-engagement rates, conversion rates from WhatsApp reminders, and Customer Lifetime Value (LTV).
+* Data exports are available in CSV/Excel formats for custom reporting.

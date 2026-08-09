@@ -1,0 +1,13 @@
+PHASE 3: ADVANCED OPERATIONS, BAY ALLOCATION & INVENTORY
+======================================================
+
+1. Mechanic & Bay Assignments
+   - Task allocation per mechanic/bay and labor time tracking.
+
+2. Parts & Inventory Management System
+   - Parts catalog with SKU, OEM codes, cost, and selling price.
+   - Automated stock reservations upon estimate approval and deduction upon job card completion.
+   - Low-stock thresholds and reorder notifications.
+
+3. Two-Way Centralized WhatsApp Inbox
+   - Shared front-desk dashboard to handle custom WhatsApp customer queries manually when needed.

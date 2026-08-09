@@ -1,0 +1,65 @@
+PHASE 3: USER STORIES (ADVANCED OPERATIONS, BAY ALLOCATION & INVENTORY)
+=====================================================================
+
+MODULE 9: MECHANIC & BAY ASSIGNMENTS
+------------------------------------
+
+User Story 9.1: Technician & Bay Allocation
+- As a: Workshop Manager
+- I want: To assign specific mechanics and work bays to individual job cards or line items
+- So that: Work is allocated efficiently based on technician skill set and physical bay capacity.
+
+Acceptance Criteria:
+* Staff can assign a mechanic and/or specific bay number to an entire job card or specific labor tasks.
+* Visual workshop board displays real-time technician workload and bay occupancy status.
+* Reassigning a technician or bay updates the job card and alerts the designated mechanic on their mobile view.
+
+
+User Story 9.2: Labor Hours & Efficiency Tracking
+- As a: Mechanic
+- I want: To start and stop labor timers on assigned job card tasks
+- So that: My actual worked time is logged and compared against estimated billable hours.
+
+Acceptance Criteria:
+* Mobile/tablet view provides Start, Pause, and Complete buttons for assigned work items.
+* System logs actual elapsed labor time against estimated flat-rate labor times.
+* Managers can view labor variance reports comparing estimated vs. actual hours per job.
+
+
+MODULE 10: PARTS & INVENTORY MANAGEMENT SYSTEM
+----------------------------------------------
+
+User Story 10.1: Parts Catalog & Low-Stock Alerts
+- As an: Inventory Manager
+- I want: To manage a parts catalog with OEM numbers, supplier details, costs, and safety stock levels
+- So that: Low-stock dashboard alerts notify us before critical repair parts run out.
+
+Acceptance Criteria:
+* Inventory records store Part Name, SKU, OEM Code, Supplier Info, Cost Price, Selling Price, and Reorder Threshold.
+* Dashboard displays automated low-stock warnings when stock on hand drops to or below the designated reorder threshold.
+* Supports filtering parts by vehicle make/model compatibility.
+
+
+User Story 10.2: Automatic Stock Reservation & Deduction
+- As an: Inventory Manager
+- I want: Stock quantities to be automatically reserved on estimate approval and deducted on job completion
+- So that: Inventory counts remain strictly synchronized with active workshop consumption.
+
+Acceptance Criteria:
+* Approving an estimate line item reserves the required parts quantity from available stock.
+* Marking a job card as completed/closed deducts reserved parts from on-hand inventory balances.
+* Canceling a job or line item releases reserved stock back to available inventory.
+
+
+MODULE 11: TWO-WAY CENTRALIZED WHATSAPP INBOX
+---------------------------------------------
+
+User Story 11.1: Shared Front-Desk WhatsApp Inbox
+- As a: Front-Desk Staff member
+- I want: A shared central inbox to view and respond to custom customer WhatsApp messages
+- So that: Staff can seamlessly manage custom inquiries or step in when chatbot handoff occurs.
+
+Acceptance Criteria:
+* Central dashboard displays incoming WhatsApp messages in real time with unread badges.
+* Staff members can take ownership of a chat thread, preventing multiple agents from sending conflicting replies.
+* Chat window displays customer context side-by-side, including linked vehicles, past visits, and active job cards.

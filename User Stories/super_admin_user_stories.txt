@@ -1,0 +1,44 @@
+SUPER ADMIN DASHBOARD - USER STORIES & ACCEPTANCE CRITERIA
+=========================================================
+
+User Story S.1: Package Builder & Feature Bundling
+- As a: System Owner
+- I want: To create and edit subscription packages with specific feature sets and usage quotas
+- So that: I can offer tiered pricing options to different sizes of auto repair shops.
+
+Acceptance Criteria:
+* Owner can set Package Name, Description, Monthly Price, and Annual Discount Price.
+* Owner can select/deselect checkboxes from the Master Feature Registry to define the package's bundled capabilities.
+* Saving changes updates the plan definition instantly for all new subscriptions.
+
+
+User Story S.2: Master Feature Flag Registry
+- As a: System Owner
+- I want: To register new features in a master catalog and set whether they are available as standalone add-ons
+- So that: I can monetize individual tools without forcing customers into higher subscription tiers.
+
+Acceptance Criteria:
+* Owner can add a feature with a Feature Code, Display Name, Description, and Is_Addon_Eligible toggle.
+* If flagged as an add-on, the Owner can set a default standalone monthly price for that feature.
+* Disabling a feature globally hides it from all package builders and tenant add-on menus.
+
+
+User Story S.3: Tenant Feature Overrides & Custom Add-Ons
+- As a: System Owner
+- I want: To view a specific garage's account and add or remove individual features outside their base plan
+- So that: I can sell individual add-ons or grant custom promotional features upon request.
+
+Acceptance Criteria:
+* The tenant management screen displays their active Base Package alongside a list of active Add-On Features.
+* Owner can toggle any add-on feature ON or OFF for that tenant, setting an optional expiration date.
+* When toggled ON, the Entitlement Engine grants immediate access to that feature in the garage’s dashboard without requiring a system restart or re-login.
+
+
+User Story S.4: Subscription Suspension & Quota Overrides
+- As a: System Owner
+- I want: To adjust individual tenant quotas (e.g., bay count limits) or suspend overdue accounts
+- So that: I can manage custom enterprise terms and control system revenue collection.
+
+Acceptance Criteria:
+* Owner can overwrite default package quotas for a specific garage (e.g., increasing Bay Limit from 2 to 5).
+* Setting a tenant status to Suspended blocks all garage user logins and API webhooks while displaying a payment warning banner.

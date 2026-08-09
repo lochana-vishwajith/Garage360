@@ -1,0 +1,8 @@
+/* ═══════════════════════════════════════
+   SharedUI.css
+   ═══════════════════════════════════════ */
+
+/* PasswordStrength label colour variants */
+.strength-label--weak   { color: #f87171; }
+.strength-label--fair   { color: #fbbf24; }
+.strength-label--strong { color: #34d399; }

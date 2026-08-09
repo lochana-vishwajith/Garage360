@@ -1,0 +1,118 @@
+PHASE 1: USER STORIES & ACCEPTANCE CRITERIA
+===========================================
+
+MODULE 1: TECHNICAL FOUNDATION, SECURITY & TWO-TIER ACCESS CONTROL
+------------------------------------------------------------------
+
+User Story 1.1: Multi-Tenant Data Isolation
+- As an: Admin (Garage Owner)
+- I want: My garage’s data to be logically isolated and encrypted from all other tenants
+- So that: My customer databases, financial records, and operational logs remain completely private and secure.
+
+Acceptance Criteria:
+* Every database query must be strictly scoped by a unique tenant_id session token.
+* Accessing resources of another tenant_id via payload manipulation returns a 403 Forbidden error.
+* Data at rest and in transit utilizes AES-256 and TLS 1.3 encryption.
+
+
+User Story 1.2: Custom Role Creation & Checkbox Permission Matrix
+- As a: Tenant Admin (Garage Owner/Manager)
+- I want: To build custom staff roles and select allowed features via a checkbox dashboard
+- So that: I can restrict staff access strictly to their assigned job responsibilities.
+
+Acceptance Criteria:
+* Admin can click "Create New Role", enter a Role Name, and view a matrix of available system features.
+* Unlocked subscription features display interactively with View, Create/Edit, and Delete checkboxes.
+* Non-subscribed package features display in a disabled state with an [Upgrade Package to Unlock] badge.
+* Saving a role updates permissions instantly across all users assigned to that role.
+
+
+User Story 1.3: Staff Account Provisioning & Role Assignment
+- As a: Tenant Admin (Garage Owner/Manager)
+- I want: To create login credentials for staff members and assign them custom roles
+- So that: Employees can securely log into the system within appropriate permission boundaries.
+
+Acceptance Criteria:
+* Admin can add a new user profile with Name, Email, Phone Number, and assigned Role(s).
+* Logged-in staff members can only view dashboard links, buttons, and API routes explicitly checked in their assigned role matrix.
+* Attempting to navigate directly to an unauthorized URL path redirects the user to a 403 Access Denied screen.
+
+
+MODULE 2: CUSTOMER & VEHICLE INTELLIGENCE (CRM)
+-----------------------------------------------
+
+User Story 2.1: Centralized Customer Profile Management
+- As a: Front-Desk Staff member
+- I want: To create and update customer profiles with contact information and notes
+- So that: The garage maintains an accurate, single source of truth for all client records.
+
+Acceptance Criteria:
+* Staff can search customer records by primary phone number, full name, or email address.
+* Profile fields capture First Name, Last Name, Primary Phone Number, Email, Physical Address, and Custom Notes.
+* Profile view displays linked vehicles, active job cards, and total historic visits.
+
+
+User Story 2.2: Multi-Vehicle Association & Registry
+- As a: Front-Desk Staff member
+- I want: To register and link multiple vehicles to a single customer profile
+- So that: I can manage service workflows for individual owners, families, or commercial fleets.
+
+Acceptance Criteria:
+* Staff can add a vehicle by providing License Plate Number, VIN, Make, Model, Year, Engine Code, Color, and Initial Odometer Reading.
+* License plate entries automatically convert to uppercase alphanumeric characters and check for uniqueness within the tenant scope.
+
+
+MODULE 3: WORKSHOP FLOOR SCHEDULING & MASTER CALENDAR
+------------------------------------------------------
+
+User Story 3.1: Operating Hours & Capacity Configuration
+- As an: Admin (Garage Owner)
+- I want: To configure shop operating hours, service bay counts, and default slot lengths
+- So that: The scheduling system accurately reflects our physical shop capacity.
+
+Acceptance Criteria:
+* Admin can define opening/closing times per day, break windows, and total active service bays.
+* The system prevents appointment generation outside operating hours or beyond maximum simultaneous bay capacity.
+
+
+User Story 3.2: Manual Appointment Booking Grid
+- As a: Front-Desk Staff member
+- I want: To view a visual calendar grid and manually book walk-in or phone appointments
+- So that: We can organize incoming workshop traffic without double-booking bays.
+
+Acceptance Criteria:
+* Visual calendar provides Day, Week, and Bay-by-Bay grid views showing reserved vs. open slots.
+* Staff can click an open slot to create an appointment by picking an existing customer/vehicle or adding a new record on the fly.
+
+
+MODULE 4: DIGITAL JOB CARDS & VEHICLE HISTORY PASSPORT
+------------------------------------------------------
+
+User Story 4.1: Mobile Intake & Vehicle Inspection
+- As a: Front-Desk Staff member
+- I want: To perform a digital intake on a tablet or mobile device upon vehicle arrival
+- So that: I can record pre-existing damages, fuel levels, and customer complaints before work starts.
+
+Acceptance Criteria:
+* Intake captures current mileage, fuel percentage, customer-reported issues, and body damage notes/photos.
+* Submitting intake generates a digital job card linked directly to the vehicle record.
+
+
+User Story 4.2: Job Card Lifecycle Status Tracking
+- As a: Mechanic / Front-Desk Staff member
+- I want: To transition job card statuses through defined workflow stages
+- So that: The entire workshop floor has real-time visibility into every vehicle's progress.
+
+Acceptance Criteria:
+* Job card status transitions sequentially (Pending Intake -> In Repair -> Ready for Delivery).
+* Status changes log timestamps and the active user ID.
+
+
+User Story 4.3: Immutable Service History Passport
+- As a: Mechanic
+- I want: To view the historic service records of any vehicle entering the shop
+- So that: I can review past repairs, replaced parts, and technical notes before performing new diagnostics.
+
+Acceptance Criteria:
+* Opening a vehicle record displays a chronological timeline of all previous closed job cards.
+* Closed historical records are strictly read-only and cannot be altered or deleted.

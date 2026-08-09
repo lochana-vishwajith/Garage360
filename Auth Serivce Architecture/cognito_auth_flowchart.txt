@@ -1,0 +1,38 @@
+AWS COGNITO MULTI-TENANT AUTHENTICATION FLOW CHART
+==================================================
+
++-------------------+           +-----------------------+           +--------------------------+           +-------------------------+
+|      CLIENT       |           |   AWS COGNITO POOL    |           |    PRE-TOKEN LAMBDA      |           |   USER SERVICE / DB     |
++---------+---------+           +-----------+-----------+           +------------+-------------+           +------------+------------+
+          |                                 |                                    |                                  |
+          | 1. Login (Email/Password)       |                                    |                                  |
+          +-------------------------------->|                                    |                                  |
+          |                                 | 2. Credentials Validated           |                                  |
+          |                                 +----------------------------------->|                                  |
+          |                                 |                                    | 3. Fetch Tenant & Role           |
+          |                                 |                                    +--------------------------------->|
+          |                                 |                                    | 4. Return tenant_id,             |
+          |                                 |                                    |    roles & permissions           |
+          |                                 |                                    |<---------------------------------+
+          |                                 | 5. Inject Claims into JWT          |                                  |
+          |                                 |<-----------------------------------+                                  |
+          | 6. Return JWT Tokens            |                                    |                                  |
+          |<--------------------------------+                                    |                                  |
+          |                                 |                                    |                                  |
+          | 7. API Request + Bearer JWT     |                                    |                                  |
+          +-------------------------------------------------------------------------------------------------------->|
+          |                                                                                                         | 8. Validate JWT with JWKS
+          |                                                                                                         |    & Extract tenant_id
+          |                                                                                                         |
+
+
+DETAILED STEP BREAKDOWN:
+------------------------
+Step 1: Client submits user credentials (email & password) to the AWS Cognito User Pool.
+Step 2: Cognito validates credentials. Once verified, it triggers the Pre-Token Generation Lambda function.
+Step 3: The Pre-Token Lambda extracts user identity details (cognito:sub, custom:tenant_id) and queries the local User Service DB.
+Step 4: The User Service DB returns the user's assigned roles and dynamic checkbox permissions matrix.
+Step 5: The Pre-Token Lambda injects tenant_id, roles, and permissions directly into the custom claims array and returns the modified payload to Cognito.
+Step 6: Cognito signs the JWT tokens and returns the Access and ID tokens back to the Client.
+Step 7: The Client attaches the Bearer JWT token in HTTP headers for subsequent microservice API requests.
+Step 8: Backend services validate the JWT signature against Cognito's JWKS public keys, enforce tenant isolation using the embedded tenant_id, and verify RBAC permissions without hitting the database.

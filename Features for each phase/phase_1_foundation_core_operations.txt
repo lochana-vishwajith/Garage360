@@ -1,0 +1,33 @@
+PHASE 1: REQUIREMENT BREAKDOWN (FOUNDATION, CORE WORKSHOP OPERATIONS & DYNAMIC ACCESS CONTROL)
+===================================================================================================
+
+PHASE OBJECTIVE:
+Establish the multi-tenant architecture, multi-vehicle CRM, scheduling calendar, digital job cards, and the two-tier user access control engine—enabling a single garage to run its daily operations digitally while laying the security foundation for subscription monetization.
+
+
+MODULE 1: TECHNICAL FOUNDATION, SECURITY & TWO-TIER ACCESS CONTROL
+------------------------------------------------------------------
+- Multi-Tenant Data Isolation: Hard logical separation where every database read/write query is strictly scoped by a tenant_id session token.
+- Two-Tier Schema Engine: Database structures (tenants, users, roles, permissions, role_permissions, user_roles, features, packages, tenant_feature_overrides) supporting both Super Admin subscription packages and Tenant Admin staff permissions.
+- Tenant Admin Role Creator: Dashboard for the garage owner to build unlimited custom staff roles (e.g., Front-Desk Lead, Senior Mechanic, Billing Clerk).
+- Checkbox Permission Matrix: Interactive UI matrix with View, Create/Edit, and Delete checkboxes per module. Subscribed features display interactively; non-subscribed package features appear disabled with an [Upgrade Required] badge.
+- Staff Provisioning & Session Enforcement: Creation of employee logins with real-time URL path protection and 403 Forbidden redirects for unauthorized actions.
+
+
+MODULE 2: CUSTOMER & VEHICLE INTELLIGENCE (CRM)
+-----------------------------------------------
+- Centralized Customer Registry: Searchable profile management capturing owner details, contact history, and total visit frequency.
+- Multi-Vehicle Association: Linking multiple personal, family, or commercial fleet vehicles (VIN, license plate, make, model, year, engine code) to a single customer profile.
+
+
+MODULE 3: WORKSHOP FLOOR SCHEDULING & MASTER CALENDAR
+------------------------------------------------------
+- Capacity & Hours Setup: Configurable opening/closing hours, lunch break windows, and maximum simultaneous service bay limits.
+- Visual Booking Grid: Day, Week, and Bay-by-Bay drag-and-drop calendar for front-desk staff to log walk-in or phone appointments without double-booking bays.
+
+
+MODULE 4: DIGITAL JOB CARDS & VEHICLE HISTORY PASSPORT
+------------------------------------------------------
+- Mobile Vehicle Intake: Tablet-friendly inspection workflow capturing fuel levels, current mileage, customer complaints, and body damage photos upon vehicle arrival.
+- Job Lifecycle Tracking: Status transitions through Pending Intake -> In Repair -> Ready for Delivery with full user audit timestamps.
+- Immutable Service History: A chronological, read-only service passport detailing past repairs, technician notes, and historical invoices per vehicle.

@@ -1,0 +1,19 @@
+PHASE 2: BILLING & WHATSAPP SELF-SERVICE BOOKING
+===============================================
+
+1. Estimates & Invoicing
+   - Instant estimate creation and conversion to final invoices.
+   - Standard labor line items and manual parts cost entry.
+   - Flexible payment status tracking (cash, card, bank transfer).
+
+2. WhatsApp Business API Integration Setup
+   - Webhook integration with Meta Cloud API and 24-hour messaging window logic.
+
+3. WhatsApp Self-Service Appointment Chatbot
+   - Real-time slot availability lookup against the Master Calendar engine.
+   - Interactive WhatsApp menus for vehicle selection, service picking, and slot confirmation.
+   - Atomic booking engine with dynamic capacity calculations and automated 15-minute buffer periods.
+   - Instant real-time calendar synchronization (WebSockets) to prevent double-booking.
+
+4. WhatsApp Job Status Notifications
+   - Automated dispatches for Vehicle Checked-In, Estimate Approval Request, and Vehicle Ready for Pickup.

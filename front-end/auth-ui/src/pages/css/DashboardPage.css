@@ -1,0 +1,105 @@
+/* ═══════════════════════════════════════
+   DashboardPage.css
+   ═══════════════════════════════════════ */
+
+/* ─── Nav user info ─────────────────────── */
+.dashboard-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dashboard-nav-user {
+  text-align: right;
+}
+
+.dashboard-nav-user-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.dashboard-nav-user-email {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+/* Logout button with icon alignment */
+.btn-logout {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ─── Stat cards — color variants ──────── */
+.dashboard-card--indigo {
+  border-color: rgba(99, 102, 241, 0.2);
+}
+
+.dashboard-card--indigo .dashboard-card-icon {
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.dashboard-card--violet {
+  border-color: rgba(139, 92, 246, 0.2);
+}
+
+.dashboard-card--violet .dashboard-card-icon {
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.dashboard-card--purple {
+  border-color: rgba(167, 139, 250, 0.2);
+}
+
+.dashboard-card--purple .dashboard-card-icon {
+  background: rgba(167, 139, 250, 0.12);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+}
+
+.dashboard-card--emerald {
+  border-color: rgba(52, 211, 153, 0.2);
+}
+
+.dashboard-card--emerald .dashboard-card-icon {
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+}
+
+/* ─── Session info panel ────────────────── */
+.session-panel {
+  margin-top: 40px;
+  padding: 20px 24px;
+  background: rgba(18, 22, 42, 0.5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.session-panel-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.session-panel-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.session-field-label {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  margin-bottom: 2px;
+}
+
+.session-field-value {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  font-family: monospace;
+}

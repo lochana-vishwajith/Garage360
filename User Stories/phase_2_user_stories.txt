@@ -1,0 +1,79 @@
+PHASE 2: USER STORIES (BILLING & WHATSAPP SELF-SERVICE BOOKING)
+=============================================================
+
+MODULE 5: ESTIMATES & INVOICING
+-------------------------------
+
+User Story 5.1: Instant Estimate Generation & Digital Approval
+- As a: Front-Desk Staff member
+- I want: To create itemized quotes for parts and services and dispatch approval links over WhatsApp/SMS
+- So that: Customers can review and approve repair items remotely before work begins.
+
+Acceptance Criteria:
+* Staff can build estimates by pulling inventory items and labor line items into a unified draft quote.
+* The system generates a secure link sent via WhatsApp/SMS allowing customers to approve or reject individual line items.
+* Approved line items are locked and automatically mapped directly to the active job card.
+
+
+User Story 5.2: One-Click Invoicing & Payment Processing
+- As a: Front-Desk Staff member
+- I want: To convert approved job cards directly into final tax-compliant invoices and record payments
+- So that: We can accurately track receivables and settle bills efficiently without manual data re-entry.
+
+Acceptance Criteria:
+* System converts closed job card items into a final invoice with taxes, line discounts, and payment terms in one click.
+* Invoice supports recording multiple payment methods including cash, credit card, bank transfer, and online payment link.
+* Payment status updates in real time to Unpaid, Partially Paid, or Fully Paid with outstanding balances tracked automatically.
+
+
+MODULE 6: WHATSAPP BUSINESS API INTEGRATION SETUP
+--------------------------------------------------
+
+User Story 6.1: WhatsApp Cloud API Integration & Webhook Listener
+- As an: Admin
+- I want: The platform to securely connect with the Meta WhatsApp Cloud API
+- So that: Automated interactive messages and webhooks function reliably within WhatsApp's 24-hour service window rules.
+
+Acceptance Criteria:
+* System registers webhooks to process incoming customer WhatsApp messages and delivery/read receipts in real time.
+* Outbound notifications outside the active 24-hour window automatically use approved Meta message templates.
+* Failed message deliveries trigger automatic retries and log delivery errors in an integration diagnostic log.
+
+
+MODULE 7: WHATSAPP SELF-SERVICE APPOINTMENT CHATBOT
+--------------------------------------------------
+
+User Story 7.1: Interactive WhatsApp Self-Service Booking Flow
+- As a: Vehicle Owner
+- I want: To interactively select my vehicle, service type, date, and preferred time slot over WhatsApp
+- So that: I can book an appointment in seconds without calling the garage's general phone line.
+
+Acceptance Criteria:
+* Chatbot identifies returning customers by phone number and displays interactive list buttons of registered vehicles.
+* Chatbot presents available service options and prompts the user to select preferred dates (Today, Tomorrow, or Custom Date).
+* Upon selecting a slot and confirming, the bot generates a confirmation card with location pins and rescheduling buttons.
+
+
+User Story 7.2: Real-Time Slot Capacity & Atomic Booking Lock
+- As a: System
+- I want: To dynamically calculate bay/mechanic availability and temporarily lock requested slots during chat interaction
+- So that: Overbooking is prevented across simultaneous customer booking requests.
+
+Acceptance Criteria:
+* Slot availability engine calculates open capacity: min(Active Bays, Working Mechanics) - (Existing Appointments + Active Jobs).
+* Selecting a slot places a temporary 5-minute lock on that time window while the customer confirms.
+* Upon final confirmation, the booking is committed to the Master Calendar with WebSockets pushing updates to the dashboard instantly.
+
+
+MODULE 8: WHATSAPP JOB STATUS NOTIFICATIONS
+-------------------------------------------
+
+User Story 8.1: Automated Progress & Readiness Alerts
+- As a: Vehicle Owner
+- I want: To receive automated WhatsApp progress alerts at key repair milestones
+- So that: I stay informed about my vehicle's status without needing to call the front desk.
+
+Acceptance Criteria:
+* Transitioning a job card status triggers automated WhatsApp updates (e.g., Vehicle Checked-In, Ready for Approval, In Repair, Ready for Delivery).
+* Ready for Delivery messages include total invoice balance due and payment link details.
+* Outbound alerts log successfully in the customer's communication timeline within the CRM.

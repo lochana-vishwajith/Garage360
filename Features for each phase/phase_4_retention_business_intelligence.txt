@@ -1,0 +1,12 @@
+PHASE 4: RETENTION ENGINE & BUSINESS INTELLIGENCE
+================================================
+
+1. Predictive Maintenance & Automated Service Reminders
+   - Cron jobs that calculate overdue maintenance by time interval or estimated mileage.
+   - Automated outbound WhatsApp service reminder triggers.
+
+2. Revenue & Financial Reports
+   - Profit margin dashboards, receivables, and Parts vs. Labor revenue breakdowns.
+
+3. Operational & Retention Analytics
+   - Mechanic productivity metrics and customer retention/LTV tracking from WhatsApp reminders.

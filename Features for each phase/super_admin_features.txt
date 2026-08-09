@@ -1,0 +1,29 @@
+SUPER ADMIN DASHBOARD - FUNCTIONAL FEATURES & ARCHITECTURE
+=========================================================
+
+1. FEATURE ENTITLEMENT ARCHITECTURE
+-----------------------------------
+- Dynamic Feature Entitlement Engine: Evaluates feature access at runtime based on active base plan + custom add-on overrides.
+- Formula: Has Access = (Feature in Base Plan OR Feature in Active Tenant Add-ons) AND Subscription Active.
+- Base Packages: Pre-configured bundles containing core features and quota limits.
+- Feature Add-Ons: Standalone, billable feature toggles that can be attached to any active base plan.
+- Tenant Overrides: Ability for System Owners to manually grant/revoke features or adjust quotas per tenant.
+
+
+2. SUPER ADMIN DASHBOARD FUNCTIONAL MODULES
+-------------------------------------------
+
+2.1 Package & Tier Builder
+- Plan Creation: Define subscription tiers (e.g., Starter, Pro, Enterprise) with monthly and annual price points.
+- Feature Bundling: Toggle master features on or off for each package.
+- Quota Allocation: Assign numeric usage caps per plan (e.g., max monthly job cards, number of bays, user accounts).
+
+2.2 Master Feature Registry
+- Global Feature Flags: Register new system capabilities with a unique key (e.g., FEAT_WHATSAPP_CHATBOT, FEAT_INVENTORY_FIFO, FEAT_PREDICTIVE_REMINDERS).
+- Add-on Configuration: Designate whether a feature can be sold independently as an add-on, along with its standard recurring price.
+
+2.3 Tenant Subscription & Feature Management
+- Tenant Directory: View all registered garages, their active plan, billing status, and monthly recurring revenue (MRR).
+- Custom Feature Assignment: Manually assign or remove specific add-on features for a tenant via a single-click UI.
+- Trial & Comp Controls: Grant temporary promotional access, extend trial periods, or apply custom billing discounts to specific garages.
+- Instant Lockout / Suspension: Freeze tenant access in case of non-payment or policy violations without deleting historical garage data.
