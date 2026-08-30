@@ -28,23 +28,41 @@ const LockIcon = () => (
 )
 
 export default function LoginPage() {
-  const { login } = useAuth()
+  const { login, completeNewPassword } = useAuth()
   const navigate = useNavigate()
   const [serverError, setServerError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [challengeData, setChallengeData] = useState(null)
 
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
+    register: registerLogin,
+    handleSubmit: handleSubmitLogin,
+    reset: resetLogin,
+    formState: { errors: loginErrors },
   } = useForm()
 
-  const onSubmit = async ({ email, password }) => {
+  const {
+    register: registerNewPass,
+    handleSubmit: handleSubmitNewPass,
+    reset: resetNewPass,
+    watch: watchNewPass,
+    formState: { errors: newPassErrors },
+  } = useForm()
+
+  const newPasswordValue = watchNewPass('newPassword')
+
+  const onSubmitLogin = async ({ email, password }) => {
     setServerError('')
     setLoading(true)
     try {
-      await login(email.trim(), password)
-      navigate('/dashboard', { replace: true })
+      const res = await login(email.trim(), password)
+      if (res?.newPasswordRequired) {
+        resetLogin()
+        resetNewPass()
+        setChallengeData(res)
+      } else {
+        navigate('/dashboard', { replace: true })
+      }
     } catch (err) {
       const msg = err?.message || 'Login failed. Please try again.'
       if (err?.code === 'UserNotConfirmedException') {
@@ -56,6 +74,25 @@ export default function LoginPage() {
       } else {
         setServerError(msg)
       }
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const onSubmitNewPassword = async ({ newPassword }) => {
+    setServerError('')
+    setLoading(true)
+    try {
+      await completeNewPassword(
+        challengeData.cognitoUser,
+        newPassword,
+        challengeData.userAttributes,
+        challengeData.requiredAttributes
+      )
+      resetNewPass()
+      navigate('/dashboard', { replace: true })
+    } catch (err) {
+      setServerError(err?.message || 'Failed to update password. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -75,63 +112,131 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <h1 className="auth-heading">Welcome back</h1>
-        <p className="auth-subheading">Sign in to continue to your workspace</p>
+        {challengeData ? (
+          <>
+            <h1 className="auth-heading">Set new password</h1>
+            <p className="auth-subheading">First-time sign in detected. Please create a permanent password.</p>
 
-        {serverError && <Alert type="error">{serverError}</Alert>}
+            {serverError && <Alert type="error">{serverError}</Alert>}
 
-        <form id="login-form" className="auth-form" onSubmit={handleSubmit(onSubmit)} noValidate>
-          <InputField
-            id="login-email"
-            label="Email address"
-            type="email"
-            placeholder="you@example.com"
-            icon={<MailIcon />}
-            error={errors.email?.message}
-            {...register('email', {
-              required: 'Email is required',
-              pattern: {
-                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                message: 'Enter a valid email address',
-              },
-            })}
-          />
+            <form id="new-password-form" className="auth-form" onSubmit={handleSubmitNewPass(onSubmitNewPassword)} noValidate>
+              <InputField
+                id="new-password"
+                label="New password"
+                type="password"
+                placeholder="Enter new password"
+                icon={<LockIcon />}
+                error={newPassErrors.newPassword?.message}
+                {...registerNewPass('newPassword', {
+                  required: 'New password is required',
+                  minLength: {
+                    value: 8,
+                    message: 'Password must be at least 8 characters long',
+                  },
+                })}
+              />
 
-          <InputField
-            id="login-password"
-            label="Password"
-            type="password"
-            placeholder="Enter your password"
-            icon={<LockIcon />}
-            error={errors.password?.message}
-            {...register('password', {
-              required: 'Password is required',
-            })}
-          />
+              <InputField
+                id="confirm-new-password"
+                label="Confirm new password"
+                type="password"
+                placeholder="Re-enter new password"
+                icon={<LockIcon />}
+                error={newPassErrors.confirmPassword?.message}
+                {...registerNewPass('confirmPassword', {
+                  required: 'Please confirm your password',
+                  validate: (val) => val === newPasswordValue || 'Passwords do not match',
+                })}
+              />
 
-          <div className="login-forgot-row">
-            <Link to="/forgot-password" className="auth-link login-forgot-link">
-              Forgot password?
-            </Link>
-          </div>
+              <button
+                id="new-password-submit"
+                type="submit"
+                className="btn-primary"
+                disabled={loading}
+              >
+                {loading && <Spinner />}
+                {loading ? 'Updating password…' : 'Set Password & Sign In'}
+              </button>
+            </form>
 
-          <button
-            id="login-submit"
-            type="submit"
-            className="btn-primary"
-            disabled={loading}
-          >
-            {loading && <Spinner />}
-            {loading ? 'Signing in…' : 'Sign in'}
-          </button>
-        </form>
+            <p className="auth-footer">
+              <button
+                type="button"
+                className="auth-link"
+                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                onClick={() => {
+                  resetLogin()
+                  resetNewPass()
+                  setChallengeData(null)
+                  setServerError('')
+                }}
+              >
+                Back to Sign in
+              </button>
+            </p>
+          </>
+        ) : (
+          <>
+            <h1 className="auth-heading">Welcome back</h1>
+            <p className="auth-subheading">Sign in to continue to your workspace</p>
 
-        <p className="auth-footer">
-          Don&apos;t have an account?{' '}
-          <Link to="/register" className="auth-link">
-            Create account
-          </Link>
-        </p>
+            {serverError && <Alert type="error">{serverError}</Alert>}
+
+            <form id="login-form" className="auth-form" onSubmit={handleSubmitLogin(onSubmitLogin)} noValidate>
+              <InputField
+                id="login-email"
+                label="Email address"
+                type="email"
+                placeholder="you@example.com"
+                icon={<MailIcon />}
+                error={loginErrors.email?.message}
+                {...registerLogin('email', {
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: 'Enter a valid email address',
+                  },
+                })}
+              />
+
+              <InputField
+                id="login-password"
+                label="Password"
+                type="password"
+                placeholder="Enter your password"
+                icon={<LockIcon />}
+                error={loginErrors.password?.message}
+                {...registerLogin('password', {
+                  required: 'Password is required',
+                })}
+              />
+
+              <div className="login-forgot-row">
+                <Link to="/forgot-password" className="auth-link login-forgot-link">
+                  Forgot password?
+                </Link>
+              </div>
+
+              <button
+                id="login-submit"
+                type="submit"
+                className="btn-primary"
+                disabled={loading}
+              >
+                {loading && <Spinner />}
+                {loading ? 'Signing in…' : 'Sign in'}
+              </button>
+            </form>
+
+            <p className="auth-footer">
+              Don&apos;t have an account?{' '}
+              <Link to="/register" className="auth-link">
+                Create account
+              </Link>
+            </p>
+          </>
+        )}
       </div>
     </div>
   )

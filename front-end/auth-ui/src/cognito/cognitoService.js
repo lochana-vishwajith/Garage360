@@ -4,9 +4,17 @@ import {
   AuthenticationDetails,
 } from 'amazon-cognito-identity-js'
 
+export const cognitoAuthConfig = {
+  authority: "https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_6t1sHbu1x",
+  client_id: "efrm0n0rfb3iqd31fnaig185l",
+  redirect_uri: "https://d84l1y8p4kdic.cloudfront.net",
+  response_type: "code",
+  scope: "phone openid email",
+};
+
 const poolData = {
-  UserPoolId: import.meta.env.VITE_COGNITO_USER_POOL_ID,
-  ClientId: import.meta.env.VITE_COGNITO_CLIENT_ID,
+  UserPoolId: import.meta.env.VITE_COGNITO_USER_POOL_ID || 'eu-north-1_6t1sHbu1x',
+  ClientId: import.meta.env.VITE_COGNITO_CLIENT_ID || cognitoAuthConfig.client_id,
 }
 
 export const userPool = new CognitoUserPool(poolData)
@@ -27,9 +35,41 @@ export function cognitoLogin(email, password) {
     cognitoUser.authenticateUser(authDetails, {
       onSuccess: (result) => resolve({ cognitoUser, result }),
       onFailure: (err) => reject(err),
-      newPasswordRequired: (userAttributes) => {
-        reject({ code: 'NewPasswordRequired', userAttributes })
+      newPasswordRequired: (userAttributes, requiredAttributes) => {
+        resolve({
+          newPasswordRequired: true,
+          cognitoUser,
+          userAttributes,
+          requiredAttributes,
+        })
       },
+    })
+  })
+}
+
+// ─── Complete New Password Challenge ─────────────────────────────────────────
+export function cognitoCompleteNewPassword(
+  cognitoUser,
+  newPassword,
+  userAttributes = {},
+  requiredAttributes = []
+) {
+  return new Promise((resolve, reject) => {
+    const attrs = {}
+
+    // Include only attributes explicitly required by Cognito challenge
+    if (Array.isArray(requiredAttributes) && requiredAttributes.length > 0) {
+      requiredAttributes.forEach((attrKey) => {
+        const cleanKey = attrKey.replace(/^userAttributes\./, '')
+        if (userAttributes[cleanKey] !== undefined) {
+          attrs[cleanKey] = userAttributes[cleanKey]
+        }
+      })
+    }
+
+    cognitoUser.completeNewPasswordChallenge(newPassword, attrs, {
+      onSuccess: (result) => resolve({ cognitoUser, result }),
+      onFailure: (err) => reject(err),
     })
   })
 }

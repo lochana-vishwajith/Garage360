@@ -1,6 +1,8 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 import {
+  cognitoAuthConfig,
   cognitoLogin,
+  cognitoCompleteNewPassword,
   cognitoRegister,
   cognitoConfirmRegistration,
   cognitoResendCode,
@@ -9,6 +11,8 @@ import {
   cognitoLogout,
   getCurrentUser,
 } from '../cognito/cognitoService'
+
+export { cognitoAuthConfig }
 
 const AuthContext = createContext(null)
 
@@ -23,7 +27,22 @@ export function AuthProvider({ children }) {
   }, [])
 
   const login = async (email, password) => {
-    const { result } = await cognitoLogin(email, password)
+    const res = await cognitoLogin(email, password)
+    if (res?.newPasswordRequired) {
+      return res
+    }
+    const u = await getCurrentUser()
+    setUser(u)
+    return res.result
+  }
+
+  const completeNewPassword = async (cognitoUser, newPassword, userAttributes, requiredAttributes) => {
+    const { result } = await cognitoCompleteNewPassword(
+      cognitoUser,
+      newPassword,
+      userAttributes,
+      requiredAttributes
+    )
     const u = await getCurrentUser()
     setUser(u)
     return result
@@ -57,9 +76,11 @@ export function AuthProvider({ children }) {
   return (
     <AuthContext.Provider
       value={{
+        cognitoAuthConfig,
         user,
         loading,
         login,
+        completeNewPassword,
         register,
         confirmRegistration,
         resendCode,
