@@ -315,8 +315,15 @@ body::after {
   color: var(--color-error);
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
+  margin-top: 4px;
   animation: error-shake 0.35s ease both;
+}
+
+.input-error svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
 }
 
 @keyframes error-shake {
