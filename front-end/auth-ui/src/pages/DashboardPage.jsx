@@ -1,5 +1,7 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import TenantSubscriptionWidget from '../components/TenantSubscriptionWidget'
+import MasterFeatureWidget from '../components/MasterFeatureWidget'
 import './css/DashboardPage.css'
 
 const GarageIcon = () => (
@@ -53,6 +55,13 @@ export default function DashboardPage() {
         </div>
 
         <div className="dashboard-nav-actions">
+          <Link
+            to="/packages"
+            className="btn-ghost"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 6, textDecoration: 'none', color: '#a78bfa' }}
+          >
+            📦 Package Builder
+          </Link>
           <div className="dashboard-nav-user">
             <div className="dashboard-nav-user-name">{user?.name || user?.email}</div>
             <div className="dashboard-nav-user-email">{user?.email}</div>
@@ -93,6 +102,27 @@ export default function DashboardPage() {
             </div>
           ))}
         </div>
+
+        {/* Super Admin Control Panel */}
+        <div className="session-panel" style={{ marginTop: 24 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
+            <div>
+              <div className="session-panel-title">Super Admin Control Panel</div>
+              <p style={{ fontSize: 13, color: 'var(--color-text-secondary)', marginTop: 2 }}>
+                Configure subscription packages, feature bundles, and usage quotas for repair shops.
+              </p>
+            </div>
+            <Link to="/packages" className="btn-primary" style={{ width: 'auto', textDecoration: 'none' }}>
+              Open Package Builder →
+            </Link>
+          </div>
+        </div>
+
+        {/* Tenant Subscriptions & Package Module Viewer Widget */}
+        <TenantSubscriptionWidget />
+
+        {/* Master Feature Flags Catalog Widget */}
+        <MasterFeatureWidget />
 
         {/* Session info */}
         <div className="session-panel">
